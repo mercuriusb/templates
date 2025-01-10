@@ -1,0 +1,25 @@
+### List Tags
+GET {{url}}/endpoint
+Authorization: Bearer {{$auth.token("auth-token")}}
+
+
+###
+POST {{url}}/endpoint
+Content-Type: application/json
+Authorization: Bearer {{$auth.token("auth-token")}}
+
+{
+  "url" : "https://example.com"
+}
+
+
+###
+POST {{url}}/endpoint
+Authorization: Bearer {{$auth.token("auth-token")}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="field-name"; filename="filename.xml"
+
+< ./filename.xml
+--WebAppBoundary--

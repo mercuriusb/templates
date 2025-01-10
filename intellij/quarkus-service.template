@@ -1,0 +1,61 @@
+#set( $BASE_PACKAGE_NAME = ${PACKAGE_NAME.substring(0,${PACKAGE_NAME.lastIndexOf(".")})})
+
+package ${PACKAGE_NAME};
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
+import ${BASE_PACKAGE_NAME}.dto.${NAME}Dto;
+import ${BASE_PACKAGE_NAME}.mapper.${NAME}Mapper;
+import ${BASE_PACKAGE_NAME}.model.${NAME};
+import ${BASE_PACKAGE_NAME}.repository.${NAME}Repository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@ApplicationScoped
+public class ${NAME}Service{
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(${NAME}Service.class);
+
+  @Inject
+  ${NAME}Repository repository;
+  @Inject
+  ${NAME}Mapper mapper;
+
+  public ${NAME}Dto getById(Long id){
+    return mapper.toDto(repository.findById(id));
+  }
+
+  public List<${NAME}Dto> getAll(){
+    return repository.listAll().stream()
+                     .map(mapper::toDto)
+                     .collect(Collectors.toList());
+  }
+
+  @Transactional
+  public ${NAME}Dto create(${NAME}Dto dto) {
+      ${NAME} entity = mapper.toEntity(dto);
+      repository.persist(entity);
+      return mapper.toDto(entity);
+  }
+
+  @Transactional
+  public boolean delete(Long id){
+    return repository.deleteById(id);
+  }
+
+  @Transactional
+  public ${NAME}Dto update(long id,${NAME}Dto dto) throws NotFoundException {
+    ${NAME} entity = repository.findById(id);
+    if(entity == null){
+      throw new NotFoundException(String.format("No ${NAME} found with id[%s]", dto.getId()));
+    }
+    mapper.update(dto, entity);
+    repository.persist(entity);
+    return mapper.toDto(entity);
+  }
+}

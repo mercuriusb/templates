@@ -1,0 +1,21 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:17.2
+    restart: always
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev  
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - dockernet
+    shm_size: '2gb'
+
+networks:
+  dockernet:
+    external: true

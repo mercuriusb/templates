@@ -1,0 +1,12 @@
+package ${PACKAGE_NAME};
+
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+
+@Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA_CDI)
+public interface ${NAME}Mapper {
+    ${NAME}Dto toDto(${NAME} entity);
+    ${NAME} toEntity(${NAME}Dto domain);
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    ${NAME} update(${NAME}Dto dto, @MappingTarget ${NAME} entity);
+}
