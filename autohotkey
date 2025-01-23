@@ -1,0 +1,57 @@
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+
+; Numpad1 - Microsoft Teams
+Numpad1::
+    HandleApp("Teams.exe", "C:\Path\To\Teams.exe")
+    return
+
+; Numpad2 - Microsoft Outlook
+Numpad2::
+    HandleApp("OUTLOOK.EXE", "C:\Path\To\Outlook.exe")
+    return
+
+; Numpad3 - Google Chrome
+Numpad3::
+    HandleApp("chrome.exe", "C:\Path\To\Chrome.exe")
+    return
+
+; Numpad4 - Visual Studio Code
+Numpad4::
+    HandleApp("Code.exe", "C:\Path\To\Code.exe")
+    return
+
+; Numpad5 - File Explorer
+Numpad5::
+    HandleApp("explorer.exe", "explorer.exe")
+    return
+
+; Numpad6 - Notepad
+Numpad6::
+    HandleApp("notepad.exe", "notepad.exe")
+    return
+
+; Numpad7 - Slack
+Numpad7::
+    HandleApp("slack.exe", "C:\Path\To\Slack.exe")
+    return
+
+; Numpad8 - Spotify
+Numpad8::
+    HandleApp("Spotify.exe", "C:\Path\To\Spotify.exe")
+    return
+
+; Numpad9 - Calculator
+Numpad9::
+    HandleApp("Calculator.exe", "calc.exe")
+    return
+
+; Function to handle app focus or start
+HandleApp(AppExe, AppPath) {
+    if WinExist("ahk_exe " AppExe) {
+        WinActivate
+    } else {
+        Run, %AppPath%
+    }
+}
